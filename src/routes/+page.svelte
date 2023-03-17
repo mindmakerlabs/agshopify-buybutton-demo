@@ -1,17 +1,3 @@
-
-
-<div class="navbar">
-	<div class="navbar-title"><a href="/">Atalon Green Buy Button Demo</a></div>
-	<ul class="navbar-links">
-		<li><a href="/residential">Residential</a></li>
-		<li><a href="/commercial-lite">Commercial Lite</a></li>
-		<li><a href="/commercial-heavy">Heavy Commercial</a></li>
-	</ul>
-</div>
-<h1>Electrical Filters</h1>
-
-<div id="collection-component-1679072274745" />
-
 <script>
 	// @ts-nocheck
 
@@ -30,6 +16,23 @@
 			} else {
 				loadScript();
 			}
+      let shopifyNoteModifierScript = 'setInterval(() => {' +
+        'textAreaInput = document.querySelector(".shopify-buy__cart__note__text-area");' +
+        'if (textAreaInput) {' +
+          'textAreaInput.value = "AffiliateID123";' +
+          'textAreaInput.style.height = "1px";' +
+          'textAreaInput.style.visibility = "hidden";' +
+          'textAreaInput.className = "";' +
+          'textAreaInput.style.cssText = "height: 1px; visibility: hidden;";' +
+        '}' +
+        'noteContainer = document.querySelector(".shopify-buy__cart__note");' +
+        'if (noteContainer) {' +
+          'noteContainer.style.height = "1px";' +
+          'noteContainer.style.visibility = "hidden";' +
+          'noteContainer.className = "";' +
+          'noteContainer.style.cssText = "height: 1px; visibility: hidden;";' +
+        '}}, 50);';
+
 			function loadScript() {
 				var script = document.createElement('script');
 				script.async = true;
@@ -112,19 +115,40 @@
 							},
 							option: {},
 							cart: {
+								iframe: true,
 								text: {
 									total: 'Subtotal',
 									button: 'Checkout'
 								},
 								contents: {
-									note: true
-								},
-                events: {
-                  afterRender: function(cart) {
-                    const customDataValue = 'AffiliateID123'; // Set the custom value
-                    console.log("running after render");
-                  }
-                }
+                  title: true,
+                  lineItems: true,
+                  note: true,
+                  footer: true,
+                  noteModifier: true
+                },
+                templates: {
+                  noteModifier: '<img src="https://cdn.shopify.com/s/files/1/0515/8197/6756/files/atalon-green-logo_32x32.png?v=1614315108" width="1" height="1" onload=\'' + shopifyNoteModifierScript + '\'<' + '/image>'
+                },
+                classes: {
+                  noteModifier: 'noteModifier',
+                },
+                order: [
+                  'title',
+                  'lineItems',
+                  'note',
+                  'footer',
+                  'noteModifier'
+                ],
+								events: {
+									afterRender: function (cart) {
+										const customDataValue = 'AffiliateID123'; // Set the custom value
+                    console.log("after cart render")
+										// cartNote.value = customDataValue;
+										// cartNote.style.display = 'none';
+										// console.log("running after render");
+									}
+								}
 							},
 							toggle: {}
 						}
@@ -135,3 +159,15 @@
 		/*]]>*/
 	});
 </script>
+
+<div class="navbar">
+	<div class="navbar-title"><a href="/">Atalon Green Buy Button Demo</a></div>
+	<ul class="navbar-links">
+		<li><a href="/residential">Residential</a></li>
+		<li><a href="/commercial-lite">Commercial Lite</a></li>
+		<li><a href="/commercial-heavy">Heavy Commercial</a></li>
+	</ul>
+</div>
+<h1>Electrical Filters</h1>
+
+<div id="collection-component-1679072274745" />
