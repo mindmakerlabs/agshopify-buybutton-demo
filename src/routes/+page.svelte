@@ -18,7 +18,6 @@
 
 	onMount(() => {
 		/*<![CDATA[*/
-		/*<![CDATA[*/
 		(function () {
 			var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
 			if (window.ShopifyBuy) {
@@ -79,31 +78,7 @@
 								},
 								text: {
 									button: 'View product'
-								},
-          events: {
-            'afterRender': function(component) {
-              component.selectors.product.button.addEventListener('click', function() {
-                var customData = {
-                  'Affiliate ID': 'AffiliateID123',
-                  'Custom Field 2': 'Custom Value 2',
-                };
-
-                var defaultVariant = component.props.product.variants[0];
-
-                var lineItemProperties = Object.assign({}, defaultVariant.properties, customData);
-
-                var lineItem = {
-                  variant: defaultVariant,
-                  quantity: 1,
-                  properties: lineItemProperties,
-                };
-
-                client.checkout.addLineItems(component.props.cart.id, [lineItem]).then(function() {
-                  ui.openCart();
-                });
-              });
-            },
-          },
+								}
 							},
 							productSet: {
 								styles: {
@@ -139,28 +114,26 @@
 								text: {
 									total: 'Subtotal',
 									button: 'Checkout'
-								}
+								},
+                events: {
+                  afterRender: function(cart) {
+                    const customDataValue = 'AffiliateID123'; // Set the custom value
+                    //cart.cartNote = "cartNote: " + customDataValue;
+                    //cart.model.note = "note: " + customDataValue;
+                    cart.model.customAttributes.push({
+                      "key": "cart-custom-attribute-key-1",
+                      "value": "cart-custom-attribute-key-1: " + customDataValue
+                    });
+                    for (let i = 0; i < cart.model.lineItems; i++) {
+                      cart.model.lineItems[i].customAttributes.push({
+                        "key": "cart-item-custom-attribute-key-" + i.toString(),
+                        "value": "cart-item-custom-attribute-key-" + i.toString() + ": " + customDataValue
+                      });
+                    }
+                  }
+                }
 							},
 							toggle: {}
-						},
-						on: {
-							beforeInit: function (component) {
-								// Override the addItem function to include customAttributes
-                console.log("running before init")
-								var originalAddItem = component.props.cart.addItem;
-								component.props.cart.addItem = function (item) {
-									// Add customAttributes to the line item
-									item.customAttributes = [
-										{
-											key: 'Affiliate ID',
-											value: 'AffiliateID123'
-										}
-									];
-                  console.log("adding attribution info")
-                  console.log(item.customAttributes)
-									return originalAddItem.call(component.props.cart, item);
-								};
-							}
 						}
 					});
 				});
