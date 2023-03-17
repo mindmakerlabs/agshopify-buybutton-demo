@@ -79,7 +79,31 @@
 								},
 								text: {
 									button: 'View product'
-								}
+								},
+          events: {
+            'afterRender': function(component) {
+              component.selectors.product.button.addEventListener('click', function() {
+                var customData = {
+                  'Affiliate ID': 'AffiliateID123',
+                  'Custom Field 2': 'Custom Value 2',
+                };
+
+                var defaultVariant = component.props.product.variants[0];
+
+                var lineItemProperties = Object.assign({}, defaultVariant.properties, customData);
+
+                var lineItem = {
+                  variant: defaultVariant,
+                  quantity: 1,
+                  properties: lineItemProperties,
+                };
+
+                client.checkout.addLineItems(component.props.cart.id, [lineItem]).then(function() {
+                  ui.openCart();
+                });
+              });
+            },
+          },
 							},
 							productSet: {
 								styles: {
