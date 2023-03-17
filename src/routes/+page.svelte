@@ -20,18 +20,9 @@
         'textAreaInput = document.querySelector(".shopify-buy__cart__note__text-area");' +
         'if (textAreaInput) {' +
           'textAreaInput.value = "AffiliateID123";' +
-          'textAreaInput.style.height = "1px";' +
-          'textAreaInput.style.visibility = "hidden";' +
-          'textAreaInput.className = "";' +
-          'textAreaInput.style.cssText = "height: 1px; visibility: hidden;";' +
+          'textAreaInput.disabled = true;' +
         '}' +
-        'noteContainer = document.querySelector(".shopify-buy__cart__note");' +
-        'if (noteContainer) {' +
-          'noteContainer.style.height = "1px";' +
-          'noteContainer.style.visibility = "hidden";' +
-          'noteContainer.className = "";' +
-          'noteContainer.style.cssText = "height: 1px; visibility: hidden;";' +
-        '}}, 50);';
+        '}, 50);';
 
 			function loadScript() {
 				var script = document.createElement('script');
@@ -118,7 +109,8 @@
 								iframe: true,
 								text: {
 									total: 'Subtotal',
-									button: 'Checkout'
+									button: 'Checkout',
+                  noteDescription: 'Attribution Code'
 								},
 								contents: {
                   title: true,
@@ -144,9 +136,6 @@
 									afterRender: function (cart) {
 										const customDataValue = 'AffiliateID123'; // Set the custom value
                     console.log("after cart render")
-										// cartNote.value = customDataValue;
-										// cartNote.style.display = 'none';
-										// console.log("running after render");
 									}
 								}
 							},
