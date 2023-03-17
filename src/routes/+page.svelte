@@ -1,4 +1,5 @@
 
+
 <div class="navbar">
 	<div class="navbar-title"><a href="/">Atalon Green Buy Button Demo</a></div>
 	<ul class="navbar-links">
@@ -9,7 +10,7 @@
 </div>
 <h1>Electrical Filters</h1>
 
-<div id="collection-component-1679065449980" />
+<div id="collection-component-1679072274745" />
 
 <script>
 	// @ts-nocheck
@@ -46,7 +47,7 @@
 				ShopifyBuy.UI.onReady(client).then(function (ui) {
 					ui.createComponent('collection', {
 						id: '294547652788',
-						node: document.getElementById('collection-component-1679065449980'),
+						node: document.getElementById('collection-component-1679072274745'),
 						moneyFormat: '%24%7B%7Bamount%7D%7D',
 						options: {
 							product: {
@@ -115,21 +116,13 @@
 									total: 'Subtotal',
 									button: 'Checkout'
 								},
+								contents: {
+									note: true
+								},
                 events: {
                   afterRender: function(cart) {
                     const customDataValue = 'AffiliateID123'; // Set the custom value
-                    //cart.cartNote = "cartNote: " + customDataValue;
-                    //cart.model.note = "note: " + customDataValue;
-                    cart.model.customAttributes.push({
-                      "key": "cart-custom-attribute-key-1",
-                      "value": "cart-custom-attribute-key-1: " + customDataValue
-                    });
-                    for (let i = 0; i < cart.model.lineItems; i++) {
-                      cart.model.lineItems[i].customAttributes.push({
-                        "key": "cart-item-custom-attribute-key-" + i.toString(),
-                        "value": "cart-item-custom-attribute-key-" + i.toString() + ": " + customDataValue
-                      });
-                    }
+                    console.log("running after render");
                   }
                 }
 							},
