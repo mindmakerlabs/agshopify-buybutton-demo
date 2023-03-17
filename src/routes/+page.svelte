@@ -20,7 +20,7 @@
         'textAreaInput = document.querySelector(".shopify-buy__cart__note__text-area");' +
         'if (textAreaInput) {' +
           'textAreaInput.value = "AffiliateID123";' +
-          'textAreaInput.disabled = true;' +
+          //'textAreaInput.disabled = true;' +
         '}' +
         '}, 50);';
 
